@@ -6,17 +6,22 @@
 require 'rails_helper'
 
 RSpec.describe 'Artists songs index' do
+
+  before(:each) do
+    @prince = Artist.create!(name: "Prince")
+    @song = @prince.songs.create!(title: "Raspberry Beret", length: 385, play_count: 38525)
+    @song_2 = @prince.songs.create!(title: "Purple Rain", length: 585, play_count: 19513)
+  end
+
   it 'shows all of the titles of the songs of a given artist' do
-    prince = Artist.create!(name: "Prince")
-    song = prince.songs.create!(title: "Raspberry Beret", length: 385, play_count: 38525)
-    song_2 = prince.songs.create!(title: "Purple Rain", length: 585, play_count: 19513)
+    visit "/artists/#{@prince.id}/songs"
 
-    visit "/artists/#{prince.id}/songs"
-
-    expect(page).to have_content(song.title)
-    expect(page).to have_content(song_2.title)
+    expect(page).to have_content(@song.title)
+    expect(page).to have_content(@song_2.title)
 
   end
 
-  it 'links to each songs show page'
+  it 'links to each songs show page' do
+
+  end
 end
